@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fighting game</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="hud-container">
+        <!--player 1 health-->
+
+        <div class="player1-hp-main">
+          <div class="player1-hp"></div>
+          <div class="player1-hp-container" id="player1-hp"></div>
+        </div>
+        <!--timer-->
+        <div class="timer">10</div>
+        <!--player 2 health-->
+        <div class="player2-hp-main">
+          <div class="player2-hp"></div>
+          <div class="player2-hp-container" id="player2-hp"></div>
+        </div>
+      </div>
+      <div class="endgame-message"></div>
+      <canvas> </canvas>
+    </div>
+  </body>
+  <script src="./js/classes.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="index.js"></script>
+</html>

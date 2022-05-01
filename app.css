@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+.main-container {
+  position: relative;
+  display: inline-block;
+}
+
+.hud-container {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 20px;
+}
+
+.timer {
+  background-color: red;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player1-hp-main {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.player2-hp-main,
+.player1-hp-main {
+  position: relative;
+  height: 30px;
+  width: 100%;
+}
+
+.player1-hp-container {
+  position: absolute;
+  background-color: blue;
+  height: 30px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.player2-hp-container {
+  position: absolute;
+  background-color: blue;
+  height: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.player2-hp,
+.player1-hp {
+  background-color: yellow;
+  height: 30px;
+  width: 100%;
+}
+
+.endgame-message {
+  position: absolute;
+  color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
