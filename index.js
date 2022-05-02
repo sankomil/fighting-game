@@ -34,18 +34,13 @@ const player = new Fighter({
     x: 0,
     y: 0,
   },
-  imageSrc: "./assets/warrior/idle/Warrior_Idle",
+  imageSrc: "./assets/warrior/idle/warrior_idle.png",
   scale: 2,
   offset: {
-    x: -30,
-    y: -85,
+    x: 33,
+    y: -61,
   },
-  imageSnip: {
-    x: 18,
-    y: 10,
-    w: 18,
-    h: 33,
-  },
+  maxFrames: 6,
 });
 
 const enemy = new Fighter({
@@ -61,18 +56,12 @@ const enemy = new Fighter({
     x: 50,
     y: 0,
   },
-  imageSrc: "./assets/death/idle/Bringer-of-Death_Idle",
+  imageSrc: "./assets/death/idle/death_idle.png",
   scale: 1.3,
   maxFrames: 8,
   offset: {
     x: 0,
-    y: -80,
-  },
-  imageSnip: {
-    x: 86,
-    y: 39,
-    w: 40,
-    h: 54,
+    y: -32,
   },
 });
 

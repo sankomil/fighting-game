@@ -34,7 +34,6 @@ class Sprite {
     scale = 1,
     maxFrames = 1,
     offset = { x: 0, y: 0 },
-    imageSnip = { x: 0, y: 0, w: 0, h: 0 },
   }) {
     this.position = position;
     this.height = spriteDimensions.height;
@@ -44,33 +43,38 @@ class Sprite {
     this.maxFrames = maxFrames;
     this.currentFrame = 0;
     this.totalFramesElapsed = 0;
-    this.holdFramesNumber = 10;
-    this.baseImageSrc = imageSrc;
+    this.holdFramesNumber = 5;
     this.offset = offset;
-    this.imageSnip = imageSnip;
 
-    this.image.src = `${imageSrc}_1.png`;
+    this.image.src = imageSrc;
   }
 
   draw() {
     canvasContext.drawImage(
       this.image,
-      this.imageSnip.x,
-      this.imageSnip.y,
-      this.imageSnip.w,
-      this.imageSnip.h,
+      this.currentFrame * (this.image.width / this.maxFrames),
+      0,
+      this.image.width / this.maxFrames,
+      this.image.height,
       this.position.x - this.offset.x,
       this.position.y - this.offset.y,
-      this.imageSnip.w * this.scale,
-      this.imageSnip.h * this.scale
+      (this.image.width / this.maxFrames) * this.scale,
+      this.image.height * this.scale
     );
-    canvasContext.fillStyle = "rgba(255,255,255,0.2)";
-    canvasContext.fillRect(
-      this.position.x - this.offset.x,
-      this.position.y - this.offset.y,
-      this.imageSnip.w * this.scale,
-      this.imageSnip.h * this.scale
-    );
+  }
+
+  animateFrames() {
+    this.totalFramesElapsed++;
+
+    console.log("here", this.holdFramesNumber);
+
+    if (this.totalFramesElapsed % this.holdFramesNumber === 0) {
+      if (this.currentFrame < this.maxFrames - 1) {
+        this.currentFrame++;
+      } else {
+        this.currentFrame = 0;
+      }
+    }
   }
 
   update() {
@@ -78,15 +82,7 @@ class Sprite {
     this.totalFramesElapsed++;
     console.log("test", this.image.src);
 
-    if (this.totalFramesElapsed % this.holdFramesNumber) {
-      if (this.currentFrame < this.maxFrames - 1) {
-        this.currentFrame++;
-        this.image.src = `${this.baseImageSrc}_${this.currentFrame}.png`;
-      } else {
-        this.currentFrame = 0;
-        this.image.src = `${this.baseImageSrc}_1.png`;
-      }
-    }
+    this.animateFrames();
   }
 }
 
@@ -102,7 +98,6 @@ class Fighter extends Sprite {
       x: 0,
       y: 0,
     },
-    imageSnip = { x: 0, y: 0, w: 0, h: 0 },
   }) {
     super({
       imageSrc,
@@ -110,7 +105,6 @@ class Fighter extends Sprite {
       maxFrames,
       position,
       offset,
-      imageSnip,
     });
 
     this.velocity = velocity;
@@ -128,11 +122,14 @@ class Fighter extends Sprite {
 
     this.currentFrame = 0;
     this.totalFramesElapsed = 0;
-    this.holdFramesNumber = 100;
+    this.holdFramesNumber = 5;
   }
 
   update() {
     this.draw();
+
+    this.animateFrames();
+
     this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
 
