@@ -16,7 +16,12 @@ canvas.height = 576;
 
 canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
-const player = new Sprite({
+const background = new Background({
+  position: { x: 0, y: 0 },
+  imageSrc: "./assets/background/forest.png",
+});
+
+const player = new Fighter({
   position: {
     x: 0,
     y: 0,
@@ -29,9 +34,11 @@ const player = new Sprite({
     x: 0,
     y: 0,
   },
+  imageSrc: "./assets/warrior/idle/Warrior_Idle",
+  scale: 2,
 });
 
-const enemy = new Sprite({
+const enemy = new Fighter({
   position: {
     x: 400,
     y: 100,
@@ -44,6 +51,9 @@ const enemy = new Sprite({
     x: 50,
     y: 0,
   },
+  imageSrc: "./assets/death/idle/Bringer-of-Death_Idle",
+  scale: 2,
+  maxFrames: 8,
 });
 
 let timer = 10;
@@ -64,6 +74,7 @@ function animate() {
   window.requestAnimationFrame(animate);
   canvasContext.fillStyle = "black";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+  background.update();
   player.update();
   enemy.update();
 
