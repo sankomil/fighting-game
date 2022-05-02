@@ -36,6 +36,16 @@ const player = new Fighter({
   },
   imageSrc: "./assets/warrior/idle/Warrior_Idle",
   scale: 2,
+  offset: {
+    x: -30,
+    y: -85,
+  },
+  imageSnip: {
+    x: 18,
+    y: 10,
+    w: 18,
+    h: 33,
+  },
 });
 
 const enemy = new Fighter({
@@ -52,8 +62,18 @@ const enemy = new Fighter({
     y: 0,
   },
   imageSrc: "./assets/death/idle/Bringer-of-Death_Idle",
-  scale: 2,
+  scale: 1.3,
   maxFrames: 8,
+  offset: {
+    x: 0,
+    y: -80,
+  },
+  imageSnip: {
+    x: 86,
+    y: 39,
+    w: 40,
+    h: 54,
+  },
 });
 
 let timer = 10;

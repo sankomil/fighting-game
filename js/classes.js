@@ -28,7 +28,14 @@ class Background {
 }
 
 class Sprite {
-  constructor({ position, imageSrc, scale = 1, maxFrames = 1 }) {
+  constructor({
+    position,
+    imageSrc,
+    scale = 1,
+    maxFrames = 1,
+    offset = { x: 0, y: 0 },
+    imageSnip = { x: 0, y: 0, w: 0, h: 0 },
+  }) {
     this.position = position;
     this.height = spriteDimensions.height;
     this.width = spriteDimensions.width;
@@ -39,6 +46,8 @@ class Sprite {
     this.totalFramesElapsed = 0;
     this.holdFramesNumber = 10;
     this.baseImageSrc = imageSrc;
+    this.offset = offset;
+    this.imageSnip = imageSnip;
 
     this.image.src = `${imageSrc}_1.png`;
   }
@@ -46,10 +55,21 @@ class Sprite {
   draw() {
     canvasContext.drawImage(
       this.image,
-      this.position.x,
-      this.position.y,
-      this.image.width * this.scale,
-      this.image.height * this.scale
+      this.imageSnip.x,
+      this.imageSnip.y,
+      this.imageSnip.w,
+      this.imageSnip.h,
+      this.position.x - this.offset.x,
+      this.position.y - this.offset.y,
+      this.imageSnip.w * this.scale,
+      this.imageSnip.h * this.scale
+    );
+    canvasContext.fillStyle = "rgba(255,255,255,0.2)";
+    canvasContext.fillRect(
+      this.position.x - this.offset.x,
+      this.position.y - this.offset.y,
+      this.imageSnip.w * this.scale,
+      this.imageSnip.h * this.scale
     );
   }
 
@@ -78,12 +98,19 @@ class Fighter extends Sprite {
     imageSrc,
     scale = 1,
     maxFrames = 1,
+    offset = {
+      x: 0,
+      y: 0,
+    },
+    imageSnip = { x: 0, y: 0, w: 0, h: 0 },
   }) {
     super({
       imageSrc,
       scale,
       maxFrames,
       position,
+      offset,
+      imageSnip,
     });
 
     this.velocity = velocity;
