@@ -30,10 +30,6 @@ const player = new Fighter({
     x: 0,
     y: 10,
   },
-  attackBoxOffset: {
-    x: 0,
-    y: 0,
-  },
   imageSrc: "./assets/warrior/idle/warrior_idle.png",
   scale: 2,
   offset: {
@@ -62,6 +58,14 @@ const player = new Fighter({
       imageSrc: "./assets/warrior/attack/warrior_attack.png",
       maxFrames: 12,
     },
+  },
+  attackBox: {
+    offset: {
+      x: 4,
+      y: -35,
+    },
+    height: 50,
+    width: 100,
   },
 });
 
@@ -106,6 +110,14 @@ const enemy = new Fighter({
       imageSrc: "./assets/death/attack/death_attack.png",
       maxFrames: 10,
     },
+  },
+  attackBox: {
+    offset: {
+      x: 85,
+      y: -25,
+    },
+    height: 50,
+    width: 100,
   },
 });
 
