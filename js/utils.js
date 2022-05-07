@@ -4,7 +4,8 @@ function collisionDetection({ player, enemy, targetClass }) {
     player.attackBox.position.x <= enemy.position.x + enemy.width &&
     player.attackBox.position.y + player.attackBox.height >= enemy.position.y &&
     player.attackBox.position.y <= enemy.position.y + enemy.height &&
-    player.isAttacking
+    player.isAttacking &&
+    player.currentFrame === 5
   ) {
     player.isAttacking = false;
     console.log("attacked");
@@ -13,6 +14,10 @@ function collisionDetection({ player, enemy, targetClass }) {
       enemy.health -= 20;
       document.querySelector(targetClass).style.width = `${enemy.health}%`;
     }
+  }
+
+  if (player.isAttacking && player.currentFrame === 5) {
+    player.isAttacking = false;
   }
 }
 
