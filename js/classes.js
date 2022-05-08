@@ -126,6 +126,7 @@ class Fighter extends Sprite {
     this.totalFramesElapsed = 0;
     this.holdFramesNumber = 5;
     this.sprites = sprites;
+    this.dead = false;
 
     for (const sprite in this.sprites) {
       sprites[sprite].image = new Image();
@@ -136,17 +137,19 @@ class Fighter extends Sprite {
   update() {
     this.draw();
 
-    this.animateFrames();
+    if (!this.dead) {
+      this.animateFrames();
+    }
 
     this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y - this.attackBox.offset.y;
 
-    canvasContext.fillRect(
-      this.attackBox.position.x,
-      this.attackBox.position.y,
-      this.attackBox.width,
-      this.attackBox.height
-    );
+    // canvasContext.fillRect(
+    //   this.attackBox.position.x,
+    //   this.attackBox.position.y,
+    //   this.attackBox.width,
+    //   this.attackBox.height
+    // );
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -168,10 +171,34 @@ class Fighter extends Sprite {
     // }, 100);
   }
 
+  getHurt() {
+    this.health -= 20;
+
+    if (this.health <= 0) {
+      this.switchSprite("die");
+    } else {
+      this.switchSprite("hurt");
+    }
+  }
+
   switchSprite(sprite) {
+    if (this.image === this.sprites.die.image) {
+      if (this.currentFrame === this.sprites.die.maxFrames - 1) {
+        this.dead = true;
+      }
+      return;
+    }
+
     if (
       this.image === this.sprites.attack1.image &&
       this.currentFrame < this.sprites.attack1.maxFrames - 1
+    ) {
+      return;
+    }
+
+    if (
+      this.image === this.sprites.hurt.image &&
+      this.currentFrame < this.sprites.hurt.maxFrames - 1
     ) {
       return;
     }
@@ -213,6 +240,22 @@ class Fighter extends Sprite {
         if (this.image !== this.sprites.attack1.image) {
           this.image = this.sprites.attack1.image;
           this.maxFrames = this.sprites.attack1.maxFrames;
+          this.currentFrame = 0;
+        }
+        break;
+
+      case "hurt":
+        if (this.image !== this.sprites.hurt.image) {
+          this.image = this.sprites.hurt.image;
+          this.maxFrames = this.sprites.hurt.maxFrames;
+          this.currentFrame = 0;
+        }
+        break;
+
+      case "die":
+        if (this.image !== this.sprites.die.image) {
+          this.image = this.sprites.die.image;
+          this.maxFrames = this.sprites.die.maxFrames;
           this.currentFrame = 0;
         }
         break;

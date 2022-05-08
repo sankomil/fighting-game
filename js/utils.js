@@ -11,8 +11,10 @@ function collisionDetection({ player, enemy, targetClass }) {
     console.log("attacked");
 
     if (enemy.width > 0) {
-      enemy.health -= 20;
-      document.querySelector(targetClass).style.width = `${enemy.health}%`;
+      enemy.getHurt();
+      gsap.to(targetClass, {
+        width: `${enemy.health}%`,
+      });
     }
   }
 

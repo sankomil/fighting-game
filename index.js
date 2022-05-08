@@ -58,6 +58,14 @@ const player = new Fighter({
       imageSrc: "./assets/warrior/attack/warrior_attack.png",
       maxFrames: 12,
     },
+    hurt: {
+      imageSrc: "./assets/warrior/hurt/warrior_hurt.png",
+      maxFrames: 4,
+    },
+    die: {
+      imageSrc: "./assets/warrior/death/warrior_die.png",
+      maxFrames: 11,
+    },
   },
   attackBox: {
     offset: {
@@ -110,6 +118,14 @@ const enemy = new Fighter({
       imageSrc: "./assets/death/attack/death_attack.png",
       maxFrames: 10,
     },
+    hurt: {
+      imageSrc: "./assets/death/hurt/death_hurt.png",
+      maxFrames: 3,
+    },
+    die: {
+      imageSrc: "./assets/death/death/death_die.png",
+      maxFrames: 10,
+    },
   },
   attackBox: {
     offset: {
@@ -121,7 +137,7 @@ const enemy = new Fighter({
   },
 });
 
-let timer = 10;
+let timer = 50;
 
 let decTimerId;
 
@@ -140,6 +156,8 @@ function animate() {
   canvasContext.fillStyle = "black";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height);
   background.update();
+  canvasContext.fillStyle = "rgba(255,255,255,0.1)";
+  canvasContext.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
 
@@ -147,10 +165,14 @@ function animate() {
   player.velocity.x = 0;
 
   if (keys.a.pressed && player.lastKey === "a") {
-    player.velocity.x = -5;
+    if (player.position.x - 5 >= 0) {
+      player.velocity.x = -5;
+    }
     player.switchSprite("run");
   } else if (keys.d.pressed && player.lastKey === "d") {
-    player.velocity.x = 5;
+    if (player.position.x + 5 + player.width <= canvas.width) {
+      player.velocity.x = 5;
+    }
     player.switchSprite("run");
   } else {
     player.switchSprite("idle");
@@ -165,10 +187,14 @@ function animate() {
   //player 2 movement
   enemy.velocity.x = 0;
   if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
-    enemy.velocity.x = -5;
+    if (enemy.position.x - 5 >= 0) {
+      enemy.velocity.x = -5;
+    }
     enemy.switchSprite("run");
   } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
-    enemy.velocity.x = 5;
+    if (enemy.position.x + 5 + enemy.width <= canvas.width) {
+      enemy.velocity.x = 5;
+    }
     enemy.switchSprite("run");
   } else {
     enemy.switchSprite("idle");
@@ -198,44 +224,54 @@ animate();
 decreaseTimer();
 
 window.addEventListener("keydown", (event) => {
-  switch (event.key) {
-    // Player 1 actions
-    case "d":
-      keys.d.pressed = true;
-      player.lastKey = "d";
-      break;
+  if (!player.dead) {
+    switch (event.key) {
+      // Player 1 actions
+      case "d":
+        keys.d.pressed = true;
+        player.lastKey = "d";
+        break;
 
-    case "a":
-      keys.a.pressed = true;
-      player.lastKey = "a";
-      break;
+      case "a":
+        keys.a.pressed = true;
+        player.lastKey = "a";
+        break;
 
-    case "w":
-      player.velocity.y = -20;
-      break;
+      case "w":
+        if (player.position.y >= 377) {
+          player.velocity.y = -20;
+        }
+        break;
 
-    case " ":
-      player.attack();
-      break;
+      case " ":
+        player.attack();
+        break;
+    }
+  }
 
-    //Player 2 actions
-    case "ArrowRight":
-      keys.ArrowRight.pressed = true;
-      enemy.lastKey = "ArrowRight";
-      break;
+  if (!enemy.dead) {
+    switch (event.key) {
+      //Player 2 actions
+      case "ArrowRight":
+        keys.ArrowRight.pressed = true;
+        enemy.lastKey = "ArrowRight";
+        break;
 
-    case "ArrowLeft":
-      keys.ArrowLeft.pressed = true;
-      enemy.lastKey = "ArrowLeft";
-      break;
+      case "ArrowLeft":
+        keys.ArrowLeft.pressed = true;
+        enemy.lastKey = "ArrowLeft";
+        break;
 
-    case "ArrowUp":
-      enemy.velocity.y = -20;
-      break;
+      case "ArrowUp":
+        if (enemy.position.y >= 377) {
+          enemy.velocity.y = -20;
+        }
+        break;
 
-    case "ArrowDown":
-      enemy.attack();
-      break;
+      case "ArrowDown":
+        enemy.attack();
+        break;
+    }
   }
 });
 

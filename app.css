@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: "Press Start 2P", cursive;
 }
 
 .main-container {
@@ -16,9 +17,10 @@
 }
 
 .timer {
-  background-color: red;
-  width: 100px;
-  height: 100px;
+  background-color: black;
+  color: white;
+  width: 50px;
+  height: 50px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -39,29 +41,43 @@
 
 .player1-hp-container {
   position: absolute;
-  background-color: blue;
+  background-color: #35ff69;
   height: 30px;
   top: 0;
   right: 0;
   bottom: 0;
   width: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .player2-hp-container {
   position: absolute;
-  background-color: blue;
+  background-color: #35ff69;
   height: 30px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .player2-hp,
 .player1-hp {
-  background-color: yellow;
+  background-color: red;
   height: 30px;
   width: 100%;
+}
+
+.player1-hp {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.player2-hp {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .endgame-message {
